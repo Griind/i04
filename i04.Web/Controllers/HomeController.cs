@@ -11,6 +11,7 @@ namespace i04.Web.Controllers
     {
         public ActionResult Index()
         {
+            return Redirect("http://www.google.com");
             return View();
         }
 
