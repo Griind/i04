@@ -1,7 +1,5 @@
-﻿@model IEnumerable<int>
-@{
-    Layout = null;
-}
+﻿@model List<int>[]
+
 <html>
 <head>
     @{
@@ -11,33 +9,48 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 
-   
+    <script>
+
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        function getColors(amount) {
+            var retval = getRandomColor();
+            for (var i = 0; i < amount - 1; i++) {
+                retval += ', ' + getRandomColor();
+            }
+            return retval;
+        }
+
+    </script>
 
 </head>
- <body>
-     <div class="col-md-4">
-     @{foreach (var item in Model)
-         {
-             <ul><li>@item</li></ul>
-         } }
-     </div>
-
-
-     <hr/>
-
-     <canvas id="bar-chart" width="800" height="450"></canvas>
-     <script>
-         new Chart(document.getElementById("bar-chart"), {
+<body>
+    <hr />
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        <div class="container">
+        <div style="width:80%;height:80%">
+            <canvas id="bar-chart+@i"></canvas>
+        </div>
+        <script>
+         new Chart(document.getElementById("bar-chart+@i"), {
              type: 'bar',
              data: {
-                 labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+                 labels:[ @String.Join(",", Model.ElementAt(i))],
                  datasets: [
                      {
                          label: "Population (millions)",
-                         backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                      
+                         backgroundColor: getColors(@Model.ElementAt(i).Count).split(','),
 
-                         data: [@String.Join(",",Model)]
+
+                         data: [@String.Join(",", Model.ElementAt(i))]
                      }
                  ]
              },
@@ -49,12 +62,10 @@
              }
          }
          });
-     </script>
-     
-
- </body>
+        </script>
+    </div>
+    }
+    <br />
+</body>
 
 </html>
-
-
-

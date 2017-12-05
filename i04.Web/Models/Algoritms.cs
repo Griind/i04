@@ -8,7 +8,8 @@ namespace i04.Web.Models
     public class Algoritms
     {
        
-            public int Numbers { get; set; }
-       
+           // public List<int>[] Numbers { get; set; }
+           // public string Amount { get; set; }
+
     }
 }
