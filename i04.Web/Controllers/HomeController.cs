@@ -23,50 +23,33 @@ namespace i04.Web.Controllers
 
         public ActionResult Contact()
         {
-            var number = new List<Algoritms>{
-                            new Algoritms() { Numbers=23 } ,
-                            new Algoritms() { Numbers=5 } ,
-                            new Algoritms() { Numbers=19 } ,
-                            new Algoritms() { Numbers=12 } ,
-                            new Algoritms() { Numbers=14 } ,
-
-                        };
+            var number = new List<int> { 23, 5, 19, 12, 14 };
+                            
 
             bool flag = true;
             int temp;
             int numLength = number.Count();
 
-            var z = number.ElementAt(0).Numbers;
+            var z = number.ElementAt(0);
 
             for (int i = 1; (i <= (numLength - 1)) && flag; i++)
             {
                 flag = false;
                 for (int j = 0; j < (numLength - 1); j++)
                 {
-                    if (number.ElementAt(j + 1).Numbers < number.ElementAt(j).Numbers)
+                    if (number.ElementAt(j + 1) < number.ElementAt(j))
                     {
-                        temp = number.ElementAt(j).Numbers;
-                        number.ElementAt(j).Numbers = number.ElementAt(j + 1).Numbers;
-
-                        number.ElementAt(j + 1).Numbers = temp;
+                        temp = number.ElementAt(j);
+                       
+                            number[j] = number.ElementAt(j + 1);
+                        
+                        number[j + 1] = temp;
                         flag = true;
                        
                     }
                   
                 }
             }
-
-
-
-
-
-
-            foreach (var item in number)
-            {
-                ViewBag.New = item.Numbers;
-            }
-
-
 
             return View(number);
         }

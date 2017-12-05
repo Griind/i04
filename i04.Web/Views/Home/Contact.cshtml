@@ -1,4 +1,4 @@
-﻿@model IEnumerable<i04.Web.Models.Algoritms>
+﻿@model IEnumerable<int>
 @{
     Layout = null;
 }
@@ -18,7 +18,7 @@
      <div class="col-md-4">
      @{foreach (var item in Model)
          {
-             <ul><li>@item.Numbers</li></ul>
+             <ul><li>@item</li></ul>
          } }
      </div>
 
@@ -37,7 +37,7 @@
                          backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
                       
 
-                         data: [@ViewBag.New ]
+                         data: [@String.Join(",",Model)]
                      }
                  ]
              },
