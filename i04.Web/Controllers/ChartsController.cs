@@ -16,6 +16,7 @@ namespace i04.Web.Controllers
         [HttpPost]
         public ActionResult Charts(ChartsDataViewModel model)
         {
+            model.Numbers = new int[2][];
             var size = model.Amount < 0 || model.Amount > 4000 ? _random.Next(5, 150) : model.Amount;
             var numbers = new List<int>();
             for (int i = 0; i < size; i++)
