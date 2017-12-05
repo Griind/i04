@@ -1,0 +1,55 @@
+﻿@model i04.Web.Models.Home.ChartsDataViewModel
+
+
+@{
+    ViewBag.Title = "Buble Sort";
+}
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+<div class="container col-lg-12 col-sm-12 col-md-12">
+    <h2>
+        Sorting using "Bubble Sort"
+    </h2>
+    <hr />
+    <div>
+    @using (Html.BeginForm("Charts", "Charts", FormMethod.Post))
+    {
+    @Html.LabelFor(m=>Model.Amount,"Enter the ammount of random numbers ");
+    @Html.TextBoxFor(m => Model.Amount,new{@class="text-b"});
+    <input type="submit" value="Enter" />
+    }
+    </div>
+    <hr />
+    @for (var i = 0; i < Model.Numbers.Length; i++)
+    {
+        <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <canvas id="bar-chart+@i"></canvas>
+        </div>
+        <script>
+            new Chart(document.getElementById("bar-chart+@i"),
+                {
+                    type: 'bar',
+                    data: {
+                        labels: [@string.Join(",", Model.Numbers[i])],
+                        datasets: [
+                            {
+                                label: "First number:"+@(Model.Numbers[i].Length > 0 ? Model.Numbers[i][0]:0) ,
+                                backgroundColor: getColors(@Model.Numbers[i].Length).split(','),
+                                data: [@string.Join(",", Model.Numbers[i])]
+                            }
+                        ]
+                    },
+                    options: {
+                        legend: { display: true },
+                        title: {
+                            display: true,
+                            text:  ['Result for:'+ @Model.Amount]
+                        }
+                    }
+                });
+        </script>
+    }
+    <br />
+</div>
+

@@ -1,8 +1,4 @@
-﻿using i04.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿
 using System.Web.Mvc;
 
 namespace i04.Web.Controllers
@@ -27,44 +23,11 @@ namespace i04.Web.Controllers
         //    return View(new List<int>[1]);
         //}
         //[HttpPost]
-        public ActionResult Contact()
-        {
-            var random = new Random();
-            var size = random.Next(5, 150);
-            var result = new List<int>[2];
-            var numbers = new List<int>();
-            for (int i = 0; i < size; i++)
-            {
-                numbers.Add(random.Next(1, 380));
-            }
-            result[0] = new List<int>(numbers);
-
-
-            bool flag = true;
-            int temp;
-            int numLength = numbers.Count();
-
-            var z = numbers.ElementAt(0);
-
-            for (int i = 1; (i <= (numLength - 1)) && flag; i++)
-            {
-                flag = false;
-                for (int j = 0; j < (numLength - 1); j++)
-                {
-                    if (numbers.ElementAt(j + 1) < numbers.ElementAt(j))
-                    {
-                        temp = numbers.ElementAt(j);
-
-                        numbers[j] = numbers.ElementAt(j + 1);
-
-                        numbers[j + 1] = temp;
-                        flag = true;
-                    }
-                }
-            }
-            result[1] = numbers;
-            return View(result);
-        }
+        //public ActionResult Contact()
+        //{
+          
+        //    return View();
+        //}
         public void QuickSort(int[] arr, int start, int end)
         {
             if (start < end)
