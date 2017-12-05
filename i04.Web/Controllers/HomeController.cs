@@ -50,8 +50,20 @@ namespace i04.Web.Controllers
 
                         number.ElementAt(j + 1).Numbers = temp;
                         flag = true;
+                       
                     }
+                  
                 }
+            }
+
+
+
+
+
+
+            foreach (var item in number)
+            {
+                ViewBag.New = item.Numbers;
             }
 
 
