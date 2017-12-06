@@ -11,7 +11,10 @@ namespace i04.Web.Controllers
     {
         private readonly Random _random = new Random();
 
-        public ActionResult Charts() => View(new ChartsDataViewModel() { Numbers = new int[0][] });
+        public ActionResult Charts()
+        {
+            return View(new ChartsDataViewModel() { Numbers = new int[][] { new int[] { 0 }, new[] { 0 } } });
+        }
 
 
         //Test
@@ -101,18 +104,18 @@ namespace i04.Web.Controllers
                 }
             }
             watch.Stop();
-            if (watch.ElapsedMilliseconds<2)
+            if (watch.ElapsedMilliseconds < 2)
             {
                 ViewBag.ExecutionTime = "Execution time: less than 1 millisecond";
             }
             else
             {
-                ViewBag.ExecutionTime = "Execution time: "+watch.ElapsedMilliseconds+" milliseconds";
+                ViewBag.ExecutionTime = "Execution time: " + watch.ElapsedMilliseconds + " milliseconds";
             }
-           
+
 
             //Execution Timer Stop
-          
+
             model.Numbers[1] = numbers.ToArray();
             return View(model);
         }
