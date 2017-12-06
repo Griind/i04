@@ -21,22 +21,21 @@
     }
     </div>
     <hr />
-    @for (var i = 0; i < Model.Numbers.Length; i++)
-    {
+  
         <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <canvas id="bar-chart+@i"></canvas>
+            <canvas id="bar-chart1"></canvas>
         </div>
         <script>
-            new Chart(document.getElementById("bar-chart+@i"),
+            new Chart(document.getElementById("bar-chart1"),
                 {
                     type: 'bar',
                     data: {
-                        labels: [@string.Join(",", Model.Numbers[i])],
+                        labels: [@(Model.Numbers.Length > 0 ? string.Join(",", Model.Numbers[0]):"")],
                         datasets: [
                             {
-                                label: "First number:"+@(Model.Numbers[i].Length > 0 ? Model.Numbers[i][0]:0) ,
-                                backgroundColor: getColors(@Model.Numbers[i].Length).split(','),
-                                data: [@string.Join(",", Model.Numbers[i])]
+                                label: "First number:"+@(Model.Numbers.Length > 0&&Model.Numbers[0].Length>0 ? Model.Numbers[0][0]:1) ,
+                                backgroundColor: getColors(@(Model.Numbers.Length > 0 ?Model.Numbers[0].Length:0)).split(','),
+                                data: [@(Model.Numbers.Length > 0?  string.Join(",", Model.Numbers[0]):"")]
                             }
                         ]
                     },
@@ -45,12 +44,39 @@
                         title: {
                             display: true,
                             text: ['Result for:' + @Model.Amount + ' random numbers ' + '|' +' @ViewBag.ExecutionTime'],
-                          
+
                         }
                     }
                 });
         </script>
-    }
+    <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <canvas id="bar-chart2"></canvas>
+    </div>
+    <script>
+            new Chart(document.getElementById("bar-chart2"),
+                {
+                    type: 'bar',
+                    data: {
+                        labels: [@(Model.Numbers.Length > 0?  string.Join(",", Model.Numbers[1]) :"")],
+                        datasets: [
+                            {
+                               label: "First number:"+@(Model.Numbers.Length > 0 && Model.Numbers[1].Length > 0 ? Model.Numbers[1][0]:0) ,
+                                backgroundColor: getColors(@Model.Numbers[1].Length).split(','),
+                                data: [@(Model.Numbers.Length > 0?  string.Join(",", Model.Numbers[1]):"")]
+                            }
+                        ]
+                    },
+                    options: {
+                        legend: { display: true },
+                        title: {
+                            display: true,
+                            text: ['Result for:' + @Model.Amount + ' random numbers ' + '|' +' @ViewBag.ExecutionTime'],
+
+                        }
+                    }
+                });
+    </script>
+    
     <br />
 </div>
 
