@@ -49,6 +49,8 @@
                     }
                 });
         </script>
+
+    
     <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <canvas id="bar-chart2"></canvas>
     </div>
@@ -76,7 +78,58 @@
                     }
                 });
     </script>
+
     
+    <script type="text/javascript">
+            $(function () {
+                var data = getData();
+                AutoFollow(data);
+            });
+
+            function getData() {
+                var arr1 = [];
+                var arr2 = [];
+                $.ajax({
+                    url: "/Home/GetCount1/",
+                    dataType: 'json',
+                    async: false
+                }).done(function (data) {
+                    data.forEach(function (obj) {
+                        dateValue.push(obj.DateColumn);
+                        countValue.push(obj.Count);
+                    });
+                });
+                return {
+                    dateValue: dateValue,
+                    countValue: countValue
+                };
+            }
+
+
+            function AutoFollow(data) {
+                var ctx = document.getElementById("bar-chart2").getContext('2d');
+                var myChart = new Chart(ctx,
+                    {
+                        type: 'bar',
+                        data: {
+                            labels: data.dateValue, // here i want to show my date value
+                            datasets: [
+                                {
+                                    label: 'AutoFollow',
+                                    data: data.countValue, // here show my total count date wise
+                                    backgroundColor: "rgba(153,255,51,1)"
+                                }, {
+                                    label: 'Manual',
+                                    data: [30, 29, 5, 5, 20, 3, 10],
+                                    backgroundColor: "rgba(255,153,0,1)"
+                                }
+                            ]
+                        }
+                    });
+            }
+    </script>
+
+
     <br />
 </div>
 

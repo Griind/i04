@@ -1,10 +1,18 @@
 ﻿
+using i04.Web.Models.Home;
 using System.Web.Mvc;
 
 namespace i04.Web.Controllers
 {
     public class HomeController : Controller
     {
+        public JsonResult GetCount1()
+        {
+            var model = new ChartsDataViewModel() { Numbers = new int[][] { new int[] { 1, 2, 6, 8 }, new[] { 1, 20, 4, 6, 7 } } };
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Index()
         {
             return View();

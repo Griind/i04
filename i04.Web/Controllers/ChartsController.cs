@@ -18,12 +18,7 @@ namespace i04.Web.Controllers
 
 
         //Test
-        public JsonResult GetCount()
-        {
-            var model = new ChartsDataViewModel() { Numbers = new int[0][] };
-           
-            return Json(model, JsonRequestBehavior.AllowGet);
-        }
+     
         //Test HTTP
         [HttpPost]
         public ActionResult GetCount(ChartsDataViewModel model)
