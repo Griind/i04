@@ -8,7 +8,7 @@ namespace i04.Web.Controllers
     {
         public JsonResult GetCount1()
         {
-            var model = new ChartsDataViewModel() { Numbers = new int[][] { new int[] { 1, 2, 6, 8 }, new[] { 1, 20, 4, 6, 7 } } };
+            var model = MyModel.GetList();
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
