@@ -26,6 +26,9 @@ namespace i04.Web.Controllers
             model.Numbers[0] = numbers.ToArray();
             bool flag = true;
             int numLength = numbers.Count();
+
+            //Execution Timer Start
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             for (int i = 1; (i <= (numLength - 1)) && flag; i++)
             {
                 flag = false;
@@ -40,6 +43,19 @@ namespace i04.Web.Controllers
                     }
                 }
             }
+            watch.Stop();
+            if (watch.ElapsedMilliseconds<2)
+            {
+                ViewBag.ExecutionTime = "Execution time: less than 1 millisecond";
+            }
+            else
+            {
+                ViewBag.ExecutionTime = "Execution time: "+watch.ElapsedMilliseconds+" milliseconds";
+            }
+           
+
+            //Execution Timer Stop
+          
             model.Numbers[1] = numbers.ToArray();
             return View(model);
         }
