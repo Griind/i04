@@ -8,7 +8,7 @@ namespace i04.Web.Controllers
     {
         public JsonResult GetCount1()
         {
-            var model = MyModel.GetList();
+            var model = ChartsDataViewModel.GetList();
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }

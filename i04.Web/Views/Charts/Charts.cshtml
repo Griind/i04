@@ -54,30 +54,6 @@
     <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <canvas id="bar-chart2"></canvas>
     </div>
-    <script>
-            new Chart(document.getElementById("bar-chart2"),
-                {
-                    type: 'bar',
-                    data: {
-                        labels: [@(Model.Numbers.Length > 0?  string.Join(",", Model.Numbers[1]) :"")],
-                        datasets: [
-                            {
-                               label: "First number:"+@(Model.Numbers.Length > 0 && Model.Numbers[1].Length > 0 ? Model.Numbers[1][0]:0) ,
-                                backgroundColor: getColors(@Model.Numbers[1].Length).split(','),
-                                data: [@(Model.Numbers.Length > 0?  string.Join(",", Model.Numbers[1]):"")]
-                            }
-                        ]
-                    },
-                    options: {
-                        legend: { display: true },
-                        title: {
-                            display: true,
-                            text: ['Result for:' + @Model.Amount + ' random numbers ' + '|' +' @ViewBag.ExecutionTime'],
-
-                        }
-                    }
-                });
-    </script>
 
     
     <script type="text/javascript">
@@ -87,22 +63,13 @@
             });
 
             function getData() {
-                var dateValue = [];
-                var countValue = [];;
+                var Value = [];
                 $.ajax({
-                    url: "/Home/GetCount1/",
+                    url: "/Charts/GetCount/",
                     dataType: 'json',
                     async: false
-                }).done(function (data) {
-                    data.forEach(function (obj) {
-                        dateValue.push(obj.DateColumn);
-                        countValue.push(obj.Count);
-                    });
-                });
-                return {
-                    dateValue: dateValue,
-                    countValue: countValue
-                };
+                }).done(function (data) { Value = data.Numbers[0]; });
+                return { Value: Value };
             }
 
 
@@ -112,17 +79,22 @@
                     {
                         type: 'bar',
                         data: {
-                            labels: data.dateValue, // here i want to show my date value
+                            labels: data.Value, // here i want to show my date value
                             datasets: [
                                 {
-                                    label: 'AutoFollow',
-                                    data: data.countValue, // here show my total count date wise
-                                    backgroundColor: "rgba(153,255,51,1)"
+                                    label: 'First From Backend',
+                                    data: data.Value, // here show my total count date wise
+                                    backgroundColor: "#FF6D00"
                                 }, {
-                                    label: 'Manual',
+                                    label: 'Second From JS',
                                     data: [30, 29, 5, 5, 20, 3, 10],
-                                    backgroundColor: "rgba(255,153,0,1)"
+                                    backgroundColor: "#00E4FF"
+                                }, {
+                                    label: 'Third From JS',
+                                    data: [30, 29, 5, 5, 20, 3, 10],
+                                    backgroundColor: "#115E67"
                                 }
+
                             ]
                         }
                     });

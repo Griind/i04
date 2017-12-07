@@ -66,6 +66,21 @@ namespace i04.Web.Controllers
             model.Numbers[1] = numbers.ToArray();
             return View(model);
         }
+        public JsonResult GetCount()
+        {
+            var model = GetList();
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        public static ChartsDataViewModel GetList()
+        {
+
+            return new ChartsDataViewModel
+            {
+                Numbers = new Int32[2][] { new Int32[] { 2, 3, 1, 4 }, new Int32[] { 1, 2, 3, 4 } },
+                Amount = 4
+            };
+        }
         //End Test
 
         [HttpPost]
