@@ -18,6 +18,11 @@ namespace i04.Web
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                "Charts",                                       
+                "{controller}/{action}",                        
+                new { controller = "Charts", action = "GetCount" }             
+            );
         }
     }
 }

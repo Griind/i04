@@ -77,7 +77,7 @@
                         }
                     }
                 });
-    </script>*@
+    </script>
 
     
     <script type="text/javascript">
@@ -87,16 +87,21 @@
             });
 
             function getData() {
-                var dataValue = [];
-
+                var dateValue = [];
+                var countValue = [];;
                 $.ajax({
-                    url: "/Home/GetCount1/",
+                    url: "/Charts/GetCount/",
                     dataType: 'json',
                     async: false
-                }).done(function (data) { dataValue = data.Numbers[0]});
+                }).done(function (data) {
+                    data.forEach(function (obj) {
+                        dateValue.push(obj.DateColumn);
+                        countValue.push(obj.Count);
+                    });
+                });
                 return {
-                    dataValue: dataValue
-                    
+                    dateValue: dateValue,
+                    countValue: countValue
                 };
             }
 
@@ -107,17 +112,18 @@
                     {
                         type: 'bar',
                         data: {
-                            labels: data.dataValue, // here i want to show my date value
+                            labels: data.dateValue, // here i want to show my date value
                             datasets: [
                                 {
                                     label: 'AutoFollow',
-                                    data: data.dataValue, // here show my total count date wise
+                                    data: data.countValue, // here show my total count date wise
                                     backgroundColor: "rgba(153,255,51,1)"
                                 }, {
-                                    label: 'Manual',
+                                    label: 'Third From JS',
                                     data: [30, 29, 5, 5, 20, 3, 10],
-                                    backgroundColor: "rgba(255,153,0,1)"
+                                    backgroundColor: "#115E67"
                                 }
+
                             ]
                         }
                     });
