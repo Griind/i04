@@ -7,30 +7,21 @@ namespace i04.Web.Models.Home
 {
     public class ChartsDataViewModel
     {
-        public int[][] Numbers  { get; set; }
-        public int Amount  { get; set; }
-    }
-    public class MyModel
-    {
-        public string DateColumn { get; set; }
-        public int Count { get; set; }
+        public int[][] Numbers { get; set; }
+        public int Amount { get; set; }
 
-        public static List<MyModel> GetList()
+
+
+
+
+        public static ChartsDataViewModel GetList()
         {
-            return new List<MyModel>
+            return new ChartsDataViewModel
             {
-                new MyModel {DateColumn = "09-05-2017",Count = 10},
-                new MyModel {DateColumn = "10-05-2017",Count = 30},
-                new MyModel {DateColumn = "11-05-2017",Count = 50},
-                new MyModel {DateColumn = "12-05-2017",Count = 10},
-                new MyModel {DateColumn = "13-05-2017",Count = 100},
-                new MyModel {DateColumn = "14-05-2017",Count = 20},
-                new MyModel {DateColumn = "15-05-2017",Count = 10},
-                new MyModel {DateColumn = "16-05-2017",Count = 150},
-                new MyModel {DateColumn = "17-05-2017",Count = 15},
-                new MyModel {DateColumn = "18-05-2017",Count = 11},
-                new MyModel {DateColumn = "19-05-2017",Count = 5},
+                Numbers = new int[][] { new int[] { 1, 3, 2, 8, 9 }, new int[] { 1, 2, 3, 4, 5 } },
+                Amount = 5
             };
         }
+
     }
 }
