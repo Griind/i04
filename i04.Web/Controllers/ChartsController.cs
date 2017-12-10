@@ -7,6 +7,7 @@ using i04.Web.Models.Home;
 using i04.Web.Hubs;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using System.Threading;
 
 namespace i04.Web.Controllers
 {  
@@ -53,14 +54,16 @@ namespace i04.Web.Controllers
                 flag = false;
                 for (int j = 0; j < (numLength - 1); j++)
                 {
-                    if (numbers.ElementAt(j + 1) < numbers.ElementAt(j))
+                    if (numbers.ElementAt(j) > numbers.ElementAt(j+1))
                     {
-                        var temp = numbers.ElementAt(j);
-                        numbers[j] = numbers.ElementAt(j + 1);
-                        numbers[j + 1] = temp;
-                        flag = true;
-                          
+                        var temp = numbers.ElementAt(j+1);
+                        numbers[j + 1] = numbers[j];
+                        numbers[j] = temp;
                         
+                        flag = true;
+                        Thread.Sleep(500);
+                        AlgoHub.SendMessage(numbers);
+
                     }
                 }
             }
@@ -78,7 +81,7 @@ namespace i04.Web.Controllers
             //Execution Timer Stop
 
             model.Numbers[1] = numbers.ToArray();
-            AlgoHub.SendMessage(numbers);
+           
             //DefaultHubManager hubManager = new DefaultHubManager(GlobalHost.DependencyResolver);
             //var hub = hubManager.ResolveHub("AlgoHub") as AlgoHub;
 
