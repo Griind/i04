@@ -4,13 +4,23 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using i04.Web.Models.Home;
+using i04.Web.Hubs;
+using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 
 namespace i04.Web.Controllers
-{
+{  
     public class ChartsController : Controller
     {
         private readonly Random _random = new Random();
 
+        public JsonResult GetCount()
+        {
+
+            var model = ChartsDataViewModel.GetList();
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Charts()
         {
             return View(new ChartsDataViewModel() { Numbers = new int[][] { new int[] { 0 }, new[] { 0 } } });
@@ -18,13 +28,13 @@ namespace i04.Web.Controllers
 
 
         //Test
-     
-        
-      
+
+
+
 
         [HttpPost]
         public ActionResult Charts(ChartsDataViewModel model)
-        {
+        {   
             model.Numbers = new int[2][];
             var size = model.Amount < 0 || model.Amount > 4000 ? _random.Next(5, 150) : model.Amount;
             var numbers = new List<int>();
@@ -49,6 +59,8 @@ namespace i04.Web.Controllers
                         numbers[j] = numbers.ElementAt(j + 1);
                         numbers[j + 1] = temp;
                         flag = true;
+                          
+                        
                     }
                 }
             }
@@ -66,6 +78,16 @@ namespace i04.Web.Controllers
             //Execution Timer Stop
 
             model.Numbers[1] = numbers.ToArray();
+            AlgoHub.SendMessage(numbers);
+            //DefaultHubManager hubManager = new DefaultHubManager(GlobalHost.DependencyResolver);
+            //var hub = hubManager.ResolveHub("AlgoHub") as AlgoHub;
+
+            //hub.BubleSort(numbers);
+
+
+
+
+
             return View(model);
         }
     }

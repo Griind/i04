@@ -4,8 +4,74 @@
 @{
     ViewBag.Title = "Buble Sort";
 }
-<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+
+<script src="~/Scripts/io4.js"></script>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script type="text/javascript">
+    //function met() {
+        //$(function () {
+        //    var data = getData();
+        //    AutoFollow(data);
+        //});
+
+        //function getData() {
+        //    var Value = [];
+        //    $.ajax({
+        //        url: "/Charts/GetCount/",
+        //        dataType: 'json',
+        //        async: false
+        //    }).done(function (data) { Value = data.Numbers[0]; });
+        //    return { Value: Value };
+        //}
+
+
+        function AutoFollow(data) {
+            var ctx = document.getElementById("bar-chart2").getContext('2d');
+            var myChart = new Chart(ctx,
+                {
+                    type: 'bar',
+                    data: {
+                        labels: data, // here i want to show my date value
+                        datasets: [
+                           {
+                             label: 'First From Backend',
+                            data: data, // here show my total count date wise
+                           backgroundColor: "#FF6D00"
+                           }, 
+                            {
+                                label: 'Second From JS',
+                                data: [30, 29, 5, 5, 20, 3, 10],
+                                backgroundColor: "#00E4FF"
+                            }, {
+                                label: 'Third From JS',
+                                data: [30, 29, 5, 5, 20, 3, 10],
+                                backgroundColor: "#115E67"
+                            }
+
+                        ]
+                    }
+                });
+    }
+
+   
+    //}
+</script>
+@section scripts{
+    
+<script src="@Url.Content("~/Scripts/jquery.signalR-2.2.2.min.js")"></script>
+<script src="@Url.Content("~/signalr/hubs")"></script>
+<script src="~/Scripts/HubSetup.js"></script>
+    }
+
+
+
+
+
+
+
+
 
 <div class="container col-lg-12 col-sm-12 col-md-12">
     <h2>
@@ -13,19 +79,19 @@
     </h2>
     <hr />
     <div>
-    @using (Html.BeginForm("Charts", "Charts", FormMethod.Post))
-    {
-    @Html.LabelFor(m=>Model.Amount,"Enter the ammount of random numbers ");
-    @Html.TextBoxFor(m => Model.Amount,new{@class="text-b"});
-    <input type="submit" value="Enter" />
-    }
+        @using (Html.BeginForm("Charts", "Charts", FormMethod.Post))
+        {
+            @Html.LabelFor(m => Model.Amount, "Enter the ammount of random numbers ");
+            @Html.TextBoxFor(m => Model.Amount, new { @class = "text-b" });
+            <input type="submit" value="Enter" />
+        }
     </div>
     <hr />
-  
-        <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <canvas id="bar-chart1"></canvas>
-        </div>
-        <script>
+
+    <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <canvas id="bar-chart1"></canvas>
+    </div>
+    <script>
             new Chart(document.getElementById("bar-chart1"),
                 {
                     type: 'bar',
@@ -48,89 +114,44 @@
                         }
                     }
                 });
-        </script>
+    </script>
 
-    
+
     <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <canvas id="bar-chart2"></canvas>
     </div>
     @*<script>
-            new Chart(document.getElementById("bar-chart2"),
-                {
-                    type: 'bar',
-                    data: {
-                        labels: [@(Model.Numbers.Length > 0?  string.Join(",", Model.Numbers[1]) :"")],
-                        datasets: [
-                            {
-                               label: "First number:"+@(Model.Numbers.Length > 0 && Model.Numbers[1].Length > 0 ? Model.Numbers[1][0]:0) ,
-                                backgroundColor: getColors(@Model.Numbers[1].Length).split(','),
-                                data: [@(Model.Numbers.Length > 0?  string.Join(",", Model.Numbers[1]):"")]
-                            }
-                        ]
-                    },
-                    options: {
-                        legend: { display: true },
-                        title: {
-                            display: true,
-                            text: ['Result for:' + @Model.Amount + ' random numbers ' + '|' +' @ViewBag.ExecutionTime'],
-
-                        }
-                    }
-                });
-    </script>
-
-    
-    <script type="text/javascript">
-            $(function () {
-                var data = getData();
-                AutoFollow(data);
-            });
-
-            function getData() {
-                var dateValue = [];
-                var countValue = [];;
-                $.ajax({
-                    url: "/Charts/GetCount/",
-                    dataType: 'json',
-                    async: false
-                }).done(function (data) {
-                    data.forEach(function (obj) {
-                        dateValue.push(obj.DateColumn);
-                        countValue.push(obj.Count);
-                    });
-                });
-                return {
-                    dateValue: dateValue,
-                    countValue: countValue
-                };
-            }
-
-
-            function AutoFollow(data) {
-                var ctx = document.getElementById("bar-chart2").getContext('2d');
-                var myChart = new Chart(ctx,
+                new Chart(document.getElementById("bar-chart2"),
                     {
                         type: 'bar',
                         data: {
-                            labels: data.dateValue, // here i want to show my date value
+                            labels: [@(Model.Numbers.Length > 0?  string.Join(",", Model.Numbers[1]) :"")],
                             datasets: [
                                 {
-                                    label: 'AutoFollow',
-                                    data: data.countValue, // here show my total count date wise
-                                    backgroundColor: "rgba(153,255,51,1)"
-                                }, {
-                                    label: 'Third From JS',
-                                    data: [30, 29, 5, 5, 20, 3, 10],
-                                    backgroundColor: "#115E67"
+                                   label: "First number:"+@(Model.Numbers.Length > 0 && Model.Numbers[1].Length > 0 ? Model.Numbers[1][0]:0) ,
+                                    backgroundColor: getColors(@Model.Numbers[1].Length).split(','),
+                                    data: [@(Model.Numbers.Length > 0?  string.Join(",", Model.Numbers[1]):"")]
                                 }
-
                             ]
+                        },
+                        options: {
+                            legend: { display: true },
+                            title: {
+                                display: true,
+                                text: ['Result for:' + @Model.Amount + ' random numbers ' + '|' +' @ViewBag.ExecutionTime'],
+
+                            }
                         }
                     });
-            }
-    </script>
+        </script>*@
+
+
+   
+
+
+
+
 
 
     <br />
 </div>
-
