@@ -36,10 +36,39 @@
                         labels: data, // here i want to show my date value
                         datasets: [
                            {
-                             label: 'First From Backend',
+                             label: 'Sorted Numbers',
                             data: data, // here show my total count date wise
                            backgroundColor: "#FF6D00"
-                           }//, 
+                           }//,
+                            //{
+                             //   label: 'Second From JS',
+                             //   data: [30, 29, 5, 5, 20, 3, 10],
+                            //    backgroundColor: "#00E4FF"
+                           // }, {
+                            //    label: 'Third From JS',
+                            //    data: [30, 29, 5, 5, 20, 3, 10],
+                            //    backgroundColor: "#115E67"
+                          //  }
+
+                        ]
+                    }
+                });
+    
+    }
+
+           function AutoFollow1(data1) {
+            var ctx = document.getElementById("bar-chart1").getContext('2d');
+            var myChart = new Chart(ctx,
+                {
+                    type: 'bar',
+                    data: {
+                        labels: data1, // here i want to show my date value
+                        datasets: [
+                           {
+                             label: 'Generated Numbers',
+                            data: data1, // here show my total count date wise
+                           backgroundColor: "#FF6D00"
+                           }//,
                             //{
                              //   label: 'Second From JS',
                              //   data: [30, 29, 5, 5, 20, 3, 10],
@@ -54,8 +83,6 @@
                     }
                 });
     }
-
-   
     //}
 </script>
 @section scripts{
@@ -79,11 +106,11 @@
     </h2>
     <hr />
     <div>
-        @using (Html.BeginForm("Charts", "Charts", FormMethod.Post))
+        @using (Html.BeginForm("Charts", "Charts", FormMethod.Get))
         {
             @Html.LabelFor(m => Model.Amount, "Enter the ammount of random numbers ");
             @Html.TextBoxFor(m => Model.Amount, new { @class = "text-b" });
-            <input type="submit" value="Enter" />
+            <input id="generate" type="submit" value="Enter" />
         }
     </div>
     <hr />
@@ -91,7 +118,7 @@
     <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <canvas id="bar-chart1"></canvas>
     </div>
-    <script>
+    @*<script>
             new Chart(document.getElementById("bar-chart1"),
                 {
                     type: 'bar',
@@ -114,7 +141,7 @@
                         }
                     }
                 });
-    </script>
+    </script>*@
 
 
     <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">

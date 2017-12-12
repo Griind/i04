@@ -8,6 +8,8 @@ using i04.Web.Hubs;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Ajax.Utilities;
 
 namespace i04.Web.Controllers
 {  
@@ -22,20 +24,28 @@ namespace i04.Web.Controllers
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Charts()
-        {
-            return View(new ChartsDataViewModel() { Numbers = new int[][] { new int[] { 0 }, new[] { 0 } } });
-        }
+        //public ActionResult Charts()
+        //{
+
+
+        //    return View(new ChartsDataViewModel() { Numbers = new int[][] { new int[] { 0 }, new[] { 0 } } });
+        //}
+
+
+      
+
 
 
         //Test
 
 
 
+            
+        public ActionResult  Charts(ChartsDataViewModel model)
+        {
+           
+           
 
-        [HttpPost]
-        public ActionResult Charts(ChartsDataViewModel model)
-        {   
             model.Numbers = new int[2][];
             var size = model.Amount < 0 || model.Amount > 4000 ? _random.Next(5, 150) : model.Amount;
             var numbers = new List<int>();
@@ -43,7 +53,13 @@ namespace i04.Web.Controllers
             {
                 numbers.Add(_random.Next(1, 380));
             }
+
+            //1st Array SetUp
             model.Numbers[0] = numbers.ToArray();
+
+           
+            AlgoHub.SendMessage1(numbers);
+          
             bool flag = true;
             int numLength = numbers.Count();
 
@@ -62,6 +78,7 @@ namespace i04.Web.Controllers
                         
                         flag = true;
                         Thread.Sleep(500);
+                        
                         AlgoHub.SendMessage(numbers);
 
                     }
@@ -79,7 +96,7 @@ namespace i04.Web.Controllers
 
 
             //Execution Timer Stop
-
+            //2nd Array SetUp
             model.Numbers[1] = numbers.ToArray();
            
             //DefaultHubManager hubManager = new DefaultHubManager(GlobalHost.DependencyResolver);
@@ -91,7 +108,7 @@ namespace i04.Web.Controllers
 
 
 
-            return View(model);
+            return View(model );
         }
     }
 }
