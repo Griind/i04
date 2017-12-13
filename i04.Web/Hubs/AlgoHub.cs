@@ -5,51 +5,39 @@ using System.Web;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using i04.Web.Controllers;
+using i04.Web.Models.Home;
 
 namespace i04.Web.Hubs
 {
-
-  
     public class AlgoHub : Hub
 
     {
-        
-
-        public static void SendMessage(List<int> number)
-            
-        {
-            var data = number.ToArray();
-            //var hubContext = GlobalHost.ConnectionManager.GetHubContext<AlgoHub>();
-            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<AlgoHub>();
-            context.Clients.All.NewTest(data);
-            //var hubContext1 = GlobalHost.ConnectionManager.GetHubContext<AlgoHub>();
-            //hubContext.Clients.All.NewTest1(Data);
-            //hubContext.Clients.All.NewTest();
-
-
-
-
-        }
-
-
-        
-        
-
-        //public void BubleSort( List<int> number)
+        //public  int[] NewTest()
         //{
-        //    var i = number.ToArray();
-
-        //    Clients.Caller.NewTest(i);
-
-
+        //    var ret = ChartsDataViewModel.GetList();
+           
+        //    return ret.Numbers[1];
         //}
-        public void BubleSort()
-        {
+        public string GetId() => Context.ConnectionId;
 
-            Clients.All.newTest();
-
+        private static IHubConnectionContext<dynamic> GetClients(AlgoHub chatHub)
+        {    
+                return GlobalHost.ConnectionManager.GetHubContext<AlgoHub>().Clients;
         }
 
+        // Call from JavaScript
+        public void Send(int[] m)
+        {
+            Send(m, this);
+        }
+
+        // Call from C# eg: Hubs.ChatHub.Send(message, null);
+        public static void Send(int[] message, AlgoHub chatHub)
+        {
+            IHubConnectionContext<dynamic> clients = GetClients(chatHub);
+            // common logic goes here 
+            clients.All.autoFollow(message);
+        }
     }
 
 }

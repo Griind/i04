@@ -15,13 +15,13 @@ namespace i04.Web.Controllers
     {
         private readonly Random _random = new Random();
 
-        public JsonResult GetCount()
-        {
+        //public JsonResult GetCount()
+        //{
 
-            var model = ChartsDataViewModel.GetList();
+        //    //var model = ChartsDataViewModel.GetList();
 
-            return Json(model, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(model, JsonRequestBehavior.AllowGet);
+        //}
         public ActionResult Charts()
         {
             return View(new ChartsDataViewModel() { Numbers = new int[][] { new int[] { 0 }, new[] { 0 } } });
@@ -29,13 +29,25 @@ namespace i04.Web.Controllers
 
 
         //Test
-
-
+       
+        public PartialViewResult Charts2(ChartsDataViewModel model)
+        {
+            var context = GlobalHost.ConnectionManager.GetHubContext<AlgoHub>();
+            for (int i = 0; i < 30; i++)
+            {
+               
+                context.Clients.All.updateChart(new int[] { 3, 7, 4, 2, 1, 3 });
+                Thread.Sleep(100);
+            }
+                return PartialView("_Charts", model);
+     
+        }
 
 
         [HttpPost]
         public ActionResult Charts(ChartsDataViewModel model)
         {   
+            var context = GlobalHost.ConnectionManager.GetHubContext<AlgoHub>();
             model.Numbers = new int[2][];
             var size = model.Amount < 0 || model.Amount > 4000 ? _random.Next(5, 150) : model.Amount;
             var numbers = new List<int>();
@@ -61,8 +73,11 @@ namespace i04.Web.Controllers
                         numbers[j] = temp;
                         
                         flag = true;
-                        Thread.Sleep(500);
-                        AlgoHub.SendMessage(numbers);
+                        int[] ret = numbers.ToArray();
+                        //context.Clients.All.updateChart(ret);
+                        AlgoHub.Send(ret, null);
+                        Thread.Sleep(100);
+                       
 
                     }
                 }

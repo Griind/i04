@@ -26,7 +26,7 @@
         //    return { Value: Value };
         //}
 
-
+    
         function AutoFollow(data) {
             var ctx = document.getElementById("bar-chart2").getContext('2d');
             var myChart = new Chart(ctx,
@@ -51,6 +51,9 @@
                           //  }
 
                         ]
+                    },
+                    options: {
+                        animation: false
                     }
                 });
     }
@@ -62,7 +65,32 @@
     
 <script src="@Url.Content("~/Scripts/jquery.signalR-2.2.2.min.js")"></script>
 <script src="@Url.Content("~/signalr/hubs")"></script>
-<script src="~/Scripts/HubSetup.js"></script>
+<script>
+    (function() {
+        var algoHub = $.connection.algoHub;
+        $.connection.hub.start()
+            .done(function () {
+                console.log("it worked");
+                algoHub.client.AutoFollow = function (data) {
+                    AutoFollow(data);
+                }
+                algoHub.server.getId().done(function (id) {
+                    console.log("success ID" + id);
+                    $('#ConId').val(id);
+
+                }).fail(function (e) { console.log("Failed" + e) });
+                //algoHub.server.newTest().done(function (data) {
+                //    console.log("success" + data);
+                //    AutoFollow(data);
+                        
+                //}).fail(function (e) { console.log("Failed" + e) });
+                algoHub.client.AutoFollow = function (data) {
+                    AutoFollow(data);
+                };
+            });
+    })()
+    
+    </script>
     }
 
 
@@ -71,21 +99,38 @@
 
 
 
-
+@Html.Partial("_Charts")
 
 <div class="container col-lg-12 col-sm-12 col-md-12">
     <h2>
         Sorting using "Bubble Sort"
     </h2>
     <hr />
+    <script src="~/Scripts/jquery-3.2.1.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+ 
     <div>
         @using (Html.BeginForm("Charts", "Charts", FormMethod.Post))
         {
             @Html.LabelFor(m => Model.Amount, "Enter the ammount of random numbers ");
-            @Html.TextBoxFor(m => Model.Amount, new { @class = "text-b" });
+            @Html.TextBoxFor(m => Model.Amount, new {@id="amount", @class = "text-b" });
+            @Html.HiddenFor(m=>m.ConId,new {@id="ConId" });
             <input type="submit" value="Enter" />
         }
     </div>
+    <script type="text/javascript">
+         function getTextBoxContent() {
+             return document.getElementById('ConId').value;
+         }
+    </script>
+@Ajax.ActionLink("AjaxText","Charts2", new AjaxOptions()
+{
+    HttpMethod="GET",
+    UpdateTargetId="iddddd",
+    InsertionMode=InsertionMode.Replace
+})
+    <div id="iddddd"></div>
+   
     <hr />
 
     <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
