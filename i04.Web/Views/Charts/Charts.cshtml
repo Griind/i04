@@ -10,134 +10,71 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script type="text/javascript">
-    //function met() {
-        //$(function () {
-        //    var data = getData();
-        //    AutoFollow(data);
-        //});
 
-        //function getData() {
-        //    var Value = [];
-        //    $.ajax({
-        //        url: "/Charts/GetCount/",
-        //        dataType: 'json',
-        //        async: false
-        //    }).done(function (data) { Value = data.Numbers[0]; });
-        //    return { Value: Value };
-        //}
 
-    
-        function AutoFollow(data) {
-            var ctx = document.getElementById("bar-chart2").getContext('2d');
-            var myChart = new Chart(ctx,
-                {
-                    type: 'bar',
-                    data: {
-                        labels: data, // here i want to show my date value
-                        datasets: [
-                           {
-                             label: 'First From Backend',
-                            data: data, // here show my total count date wise
-                           backgroundColor: "#FF6D00"
-                           }//, 
-                            //{
-                             //   label: 'Second From JS',
-                             //   data: [30, 29, 5, 5, 20, 3, 10],
-                            //    backgroundColor: "#00E4FF"
-                           // }, {
-                            //    label: 'Third From JS',
-                            //    data: [30, 29, 5, 5, 20, 3, 10],
-                            //    backgroundColor: "#115E67"
-                          //  }
+    function updateChart2(data) {
+        var ctx = document.getElementById("bar-chart2").getContext('2d');
+        var myChart = new Chart(ctx,
+            {
+                type: 'bar',
+                data: {
+                    labels: data,
+                    datasets: [
+                        {
+                            label: 'Sorted',
+                            data: data,
+                            backgroundColor: "#FF6D00"
+                        }
 
-                        ]
-                    },
-                    options: {
-                        animation: false
-                    }
-                });
+                    ]
+                },
+                options: {
+                    animation: false
+                }
+
+            });
+
     }
 
-   
+
     //}
 </script>
 @section scripts{
-    
-<script src="@Url.Content("~/Scripts/jquery.signalR-2.2.2.min.js")"></script>
-<script src="@Url.Content("~/signalr/hubs")"></script>
-<script>
-    (function() {
+
+    <script src="@Url.Content("~/Scripts/jquery.signalR-2.2.2.min.js")"></script>
+    <script src="@Url.Content("~/signalr/hubs")"></script>
+    <script>
+    (function () {
         var algoHub = $.connection.algoHub;
         $.connection.hub.start()
             .done(function () {
                 console.log("it worked");
-                algoHub.client.AutoFollow = function (data) {
-                    AutoFollow(data);
-                }
+
                 algoHub.server.getId().done(function (id) {
                     console.log("success ID" + id);
                     $('#ConId').val(id);
 
                 }).fail(function (e) { console.log("Failed" + e) });
-                //algoHub.server.newTest().done(function (data) {
-                //    console.log("success" + data);
-                //    AutoFollow(data);
-                        
-                //}).fail(function (e) { console.log("Failed" + e) });
+
                 algoHub.client.AutoFollow = function (data) {
                     AutoFollow(data);
                 };
             });
-    })()
-    
-    </script>
-    }
-
-
-
-
-
-
-
-@Html.Partial("_Charts")
-
-<div class="container col-lg-12 col-sm-12 col-md-12">
-    <h2>
-        Sorting using "Bubble Sort"
-    </h2>
-    <hr />
-    <script src="~/Scripts/jquery-3.2.1.js"></script>
-    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
- 
-    <div>
-        @using (Html.BeginForm("Charts", "Charts", FormMethod.Post))
-        {
-            @Html.LabelFor(m => Model.Amount, "Enter the ammount of random numbers ");
-            @Html.TextBoxFor(m => Model.Amount, new {@id="amount", @class = "text-b" });
-            @Html.HiddenFor(m=>m.ConId,new {@id="ConId" });
-            <input type="submit" value="Enter" />
+        algoHub.client.updateChart2 = function (data) {
+            console.log("it worked2");
+            updateChart2(data);
+            
         }
-    </div>
-    <script type="text/javascript">
-         function getTextBoxContent() {
-             return document.getElementById('ConId').value;
-         }
-    </script>
-@Ajax.ActionLink("AjaxText","Charts2", new AjaxOptions()
-{
-    HttpMethod="GET",
-    UpdateTargetId="iddddd",
-    InsertionMode=InsertionMode.Replace
-})
-    <div id="iddddd"></div>
-   
-    <hr />
+        algoHub.client.updateChart1 = function (data) {
+            console.log("it worked1");
+            updateChart1(data);
+        }
+    })()
 
-    <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <canvas id="bar-chart1"></canvas>
-    </div>
-    <script>
-            new Chart(document.getElementById("bar-chart1"),
+            function getTextBoxContent() {
+                return document.getElementById('ConId').value;
+    }
+       new Chart(document.getElementById("bar-chart1"),
                 {
                     type: 'bar',
                     data: {
@@ -151,6 +88,7 @@
                         ]
                     },
                     options: {
+                        animation: false,
                         legend: { display: true },
                         title: {
                             display: true,
@@ -161,11 +99,56 @@
                 });
     </script>
 
+}
+
+
+
+
+
+
+
+
+<div class="container col-lg-12 col-sm-12 col-md-12">
+    <h2>
+        Sorting using "Bubble Sort"
+    </h2>
+    <hr />
+    <script src="~/Scripts/jquery-3.2.1.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+    <div>
+        @using (Html.BeginForm("Charts", "Charts", FormMethod.Post))
+        {
+            @Html.LabelFor(m => Model.Amount, "Enter the ammount of random numbers ");
+            @Html.TextBoxFor(m => Model.Amount, new { @id = "amount", @class = "text-b" });
+            @Html.HiddenFor(m => m.ConId, new { @id = "ConId" });
+            <input type="submit" value="Enter" />
+        }
+
+    </div>
+
+    @Ajax.ActionLink("AjaxText", "Charts2", new AjaxOptions()
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "iddddd",
+    InsertionMode = InsertionMode.Replace
+})
+    <div id="iddddd"></div>
+
+    <hr />
+
+    <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <canvas id="bar-chart1"></canvas>
+    </div>
+    <script>
+
+    </script>
+
 
     <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <canvas id="bar-chart2"></canvas>
     </div>
-    @*<script>
+    <script>
                 new Chart(document.getElementById("bar-chart2"),
                     {
                         type: 'bar',
@@ -174,12 +157,15 @@
                             datasets: [
                                 {
                                    label: "First number:"+@(Model.Numbers.Length > 0 && Model.Numbers[1].Length > 0 ? Model.Numbers[1][0]:0) ,
-                                    backgroundColor: getColors(@Model.Numbers[1].Length).split(','),
+                                   @*backgroundColor: getColors(@Model.Numbers[1].Length).split(','),*@
+                                     backgroundColor:  "#FF6D00",
+
                                     data: [@(Model.Numbers.Length > 0?  string.Join(",", Model.Numbers[1]):"")]
                                 }
                             ]
                         },
                         options: {
+                            animation: false,
                             legend: { display: true },
                             title: {
                                 display: true,
@@ -188,10 +174,10 @@
                             }
                         }
                     });
-        </script>*@
+    </script>
 
 
-   
+
 
 
 

@@ -56,6 +56,7 @@ namespace i04.Web.Controllers
                 numbers.Add(_random.Next(1, 380));
             }
             model.Numbers[0] = numbers.ToArray();
+            AlgoHub.UpdateChart1(model.Numbers[0],null,model.ConId);
             bool flag = true;
             int numLength = numbers.Count();
 
@@ -73,13 +74,14 @@ namespace i04.Web.Controllers
                         numbers[j] = temp;
                         
                         flag = true;
-                        int[] ret = numbers.ToArray();
-                        //context.Clients.All.updateChart(ret);
-                        AlgoHub.Send(ret, null);
-                        Thread.Sleep(100);
-                       
+
+
+                        AlgoHub.UpdateChart1(numbers.ToArray(), null, model.ConId);
+                        Thread.Sleep(25);
 
                     }
+
+
                 }
             }
             watch.Stop();
