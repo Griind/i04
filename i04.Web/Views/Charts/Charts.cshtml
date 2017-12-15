@@ -10,89 +10,50 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script type="text/javascript">
-   
 
-    
-        function AutoFollow(data) {
-            var ctx = document.getElementById("bar-chart2").getContext('2d');
-            var myChart = new Chart(ctx,
-                {
-                    type: 'bar',
-                    data: {
-                        labels: data, // here i want to show my date value
-                        datasets: [
-                           {
-                             label: 'First From Backend',
-                            data: data, // here show my total count date wise
-                           backgroundColor: "#FF6D00"
-                           }//, 
-                            //{
-                             //   label: 'Second From JS',
-                             //   data: [30, 29, 5, 5, 20, 3, 10],
-                            //    backgroundColor: "#00E4FF"
-                           // }, {
-                            //    label: 'Third From JS',
-                            //    data: [30, 29, 5, 5, 20, 3, 10],
-                            //    backgroundColor: "#115E67"
-                          //  }
-
-                        ]
-                    },
-                    options: {
-                        animation: false
-                    }
-                    
-                });
-            function addData(myChart, label, data) {
-                chart.data.labels.push(label);
-                chart.data.datasets.forEach((dataset) => {
-                    dataset.data.push(data);
-                });
-                chart.update();
-            }
+    function UpdateChart2(data) {
+        var ctx = document.getElementById("bar-chart2").getContext('2d');
+        var myChart = new Chart(ctx,
+            {
+                type: 'bar',
+                data: {
+                    labels: data,
+                    datasets: [
+                        {
+                            label: 'Sorting',
+                            data: data,
+                            backgroundColor: '#3fdbcb'
+                        }
+                    ]
+                },
+                options: {
+                    animation: false
+                }
+            });
     }
-
-   
-    //}
 </script>
 @section scripts{
-    
-<script src="@Url.Content("~/Scripts/jquery.signalR-2.2.2.min.js")"></script>
-<script src="@Url.Content("~/signalr/hubs")"></script>
-<script>
-    (function() {
-        var algoHub = $.connection.algoHub;
-        $.connection.hub.start()
-            .done(function () {
-                console.log("it worked");
-               
-                algoHub.server.getId().done(function (id) {
-                    console.log("success ID" + id);
-                    $('#ConId').val(id);
 
-                }).fail(function (e) { console.log("Failed" + e) });
-
-                algoHub.client.AutoFollow = function (data) {
-                    AutoFollow(data);
-                };
-            });
-        algoHub.client.autofollow = function (data) {
-            console.log("it worked2");
-            AutoFollow(data);
-
-        }
-    })()
-    
+    <script src="@Url.Content("~/Scripts/jquery.signalR-2.2.2.min.js")"></script>
+    <script src="@Url.Content("~/signalr/hubs")"></script>
+    <script>
+        (function () {
+            var algoHub = $.connection.algoHub;
+            $.connection.hub.start()
+                .done(function () {
+                    console.log("connected");
+                    algoHub.server.getId().done(function (id) {
+                        console.log("ID" + id);
+                        $('#ConId').val(id);
+                    }).fail(function (e) { console.log("Failed" + e) });
+                });
+            algoHub.client.updateChart2 = function (data) {
+                console.log("chart2");
+                UpdateChart2(data);
+            }
+        })()
     </script>
-    }
-
-
-
-
-
-
-
-
+}
 <div class="container col-lg-12 col-sm-12 col-md-12">
     <h2>
         Sorting using "Bubble Sort"
@@ -100,30 +61,22 @@
     <hr />
     <script src="~/Scripts/jquery-3.2.1.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
- 
+
     <div>
         @using (Html.BeginForm("Charts", "Charts", FormMethod.Post))
         {
-            @Html.LabelFor(m => Model.Amount, "Enter the ammount of random numbers ");
-            @Html.TextBoxFor(m => Model.Amount, new {@id="amount", @class = "text-b" });
-            @Html.HiddenFor(m=>m.ConId,new {@id="ConId" });
+            @Html.LabelFor(m => Model.Amount, "Enter the ammount of random numbers (0-40) ");
+            @Html.TextBoxFor(m => Model.Amount, new { @id = "amount", @class = "text-b" });
+            @Html.HiddenFor(m => m.ConId, new { @id = "ConId" });
             <input type="submit" value="Enter" />
         }
 
     </div>
     <script type="text/javascript">
-         function getTextBoxContent() {
-             return document.getElementById('ConId').value;
-         }
+        function getTextBoxContent() {
+            return document.getElementById('ConId').value;
+        }
     </script>
-@Ajax.ActionLink("AjaxText","Charts2", new AjaxOptions()
-{
-    HttpMethod="GET",
-    UpdateTargetId="iddddd",
-    InsertionMode=InsertionMode.Replace
-})
-    <div id="iddddd"></div>
-   
     <hr />
 
     <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -144,7 +97,7 @@
                         ]
                     },
                     options: {
-                        animation: false,
+                       
                         legend: { display: true },
                         title: {
                             display: true,
@@ -154,7 +107,6 @@
                     }
                 });
     </script>
-
 
     <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <canvas id="bar-chart2"></canvas>
@@ -169,14 +121,14 @@
                                 {
                                    label: "First number:"+@(Model.Numbers.Length > 0 && Model.Numbers[1].Length > 0 ? Model.Numbers[1][0]:0) ,
                                    @*backgroundColor: getColors(@Model.Numbers[1].Length).split(','),*@
-                                     backgroundColor:  "#FF6D00",
+                                   backgroundColor:  "#3fdbcb",
 
                                     data: [@(Model.Numbers.Length > 0?  string.Join(",", Model.Numbers[1]):"")]
                                 }
                             ]
                         },
                         options: {
-                            animation: false,
+
                             legend: { display: true },
                             title: {
                                 display: true,
@@ -185,15 +137,6 @@
                             }
                         }
                     });
-        </script>
-
-
-   
-
-
-
-
-
-
+    </script>
     <br />
 </div>

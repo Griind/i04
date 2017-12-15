@@ -10,19 +10,5 @@ namespace i04.Web.Models.Home
         public int[][] Numbers { get; set; }
         public int Amount { get; set; }
         public string ConId { get; set; }   
-
-
-
-
-
-        public static ChartsDataViewModel GetList()
-        {
-            return new ChartsDataViewModel
-            {
-                Numbers = new int[][] { new int[] { 1, 3, 2, 8, 9 }, new int[] { 1, 2, 3, 4, 5 } },
-                Amount = 5
-            };
-        }
-
     }
 }

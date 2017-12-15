@@ -6,18 +6,15 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using i04.Web.Controllers;
 using i04.Web.Models.Home;
+using i04.Web.Helpers;
 
 namespace i04.Web.Hubs
 {
     public class AlgoHub : Hub
 
     {
-        public int[] NewTest()
-        {
-            return ChartsDataViewModel.GetList().Numbers[1];
-        }
 
-        public string GetId() => Context.ConnectionId;
+        public string GetId() => Encode.Base64Encode(Context.ConnectionId);
 
         private static IHubConnectionContext<dynamic> GetClients(AlgoHub nub)
         {
@@ -31,7 +28,7 @@ namespace i04.Web.Hubs
         {
             IHubConnectionContext<dynamic> clients = GetClients(hub);
 
-            clients.Client(connId).autofollow(numbers);
+            clients.Client(connId).UpdateChart2(numbers);
         }
     }
 
