@@ -27,18 +27,11 @@ namespace i04.Web.Hubs
                 return nub.Clients;
         }
 
-        public static void UpdateChart2(int[] numbers, AlgoHub hub, string connId)
+        public static void Send(int[] numbers, AlgoHub hub, string connId)
         {
             IHubConnectionContext<dynamic> clients = GetClients(hub);
 
-            clients.Client(connId).UpdateChart2(numbers);
-        }
-        
-        public static void UpdateChart1(int[] numbers, AlgoHub hub, string connId)
-        {
-            IHubConnectionContext<dynamic> clients = GetClients(hub);
-
-            clients.Client(connId).UpdateChart1(numbers);
+            clients.Client(connId).autofollow(numbers);
         }
     }
 
