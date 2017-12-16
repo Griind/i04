@@ -56,5 +56,29 @@ namespace i04.Web.Helpers
             model.Numbers[1] = numbers.ToArray();
             return model;
         }
+        public static ChartsDataViewModel QuickSort(ChartsDataViewModel model , Random random)
+        {
+            return model;
+        }
+        public static ChartsDataViewModel InsertionSort(ChartsDataViewModel model, Random random)
+        {
+            return model;
+        }
+        public static ChartsDataViewModel MergeSort(ChartsDataViewModel model, Random random)
+        {
+            return model;
+        }
+        public static ChartsDataViewModel SelectionSort(ChartsDataViewModel model, Random random)
+        {
+            return model;
+        }
+        public static ChartsDataViewModel HeapSort(ChartsDataViewModel model, Random random)
+        {
+            return model;
+        }
+        public static ChartsDataViewModel CountingSort(ChartsDataViewModel model, Random random)
+        {
+            return model;
+        }
     }
 }
