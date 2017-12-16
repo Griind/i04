@@ -6,13 +6,13 @@ namespace i04.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public JsonResult GetCount1()
-        {
+        //public JsonResult GetCount1()
+        //{
             
-            var model = ChartsDataViewModel.GetList();
+        //   // var model = ChartsDataViewModel.GetList();
 
-            return Json(model, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(model, JsonRequestBehavior.AllowGet);
+        //}
 
         public ActionResult Index()
         {

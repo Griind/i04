@@ -179,9 +179,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Encode.cs" />
+    <Compile Include="Helpers\SortingAlgorithms.cs" />
     <Compile Include="Hubs\AlgoHub.cs" />
-    <Compile Include="Models\Algoritms.cs" />
-    <Compile Include="Models\Home\ChartsDataViewModel.cs" />
+    <Compile Include="Models\ChartsDataViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

@@ -5,82 +5,31 @@ using System.Web;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using i04.Web.Controllers;
-using System.Threading.Tasks;
+using i04.Web.Models.Home;
+using i04.Web.Helpers;
 
 namespace i04.Web.Hubs
 {
-
-  
     public class AlgoHub : Hub
 
     {
-        public void Rezz(int []data) {
 
-            var z = data;
-            var id = Context.ConnectionId;
-            Clients.Client(id).testone(data,id);
-        }
+        public string GetId() => Encode.Base64Encode(Context.ConnectionId);
 
-        
-
-        public static void SendMessage(List<int> number)
-
+        private static IHubConnectionContext<dynamic> GetClients(AlgoHub nub)
         {
-            
-            var data = number.ToArray();
-            //var hubContext = GlobalHost.ConnectionManager.GetHubContext<AlgoHub>();
-            IHubContext das = GlobalHost.ConnectionManager.GetHubContext<AlgoHub>();
-            
-
-            das.Clients.All.NewTest(data);
-                      
-            
-            //var hubContext1 = GlobalHost.ConnectionManager.GetHubContext<AlgoHub>();
-            //hubContext.Clients.All.NewTest1(Data);
-            //hubContext.Clients.All.NewTest();
-
-
-
-
+            if (nub == null)
+                return GlobalHost.ConnectionManager.GetHubContext<AlgoHub>().Clients;
+            else
+                return nub.Clients;
         }
 
-        public static void SendMessage1(List<int> number)
-
+        public static void Send(int[] numbers, AlgoHub hub, string connId)
         {
-            var data1 = number.ToArray();
-            //var hubContext = GlobalHost.ConnectionManager.GetHubContext<AlgoHub>();
-            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<AlgoHub>();
-            context.Clients.All.NewTest1(data1);
-            
-            //var hubContext1 = GlobalHost.ConnectionManager.GetHubContext<AlgoHub>();
-            //hubContext.Clients.All.NewTest1(Data);
-            //hubContext.Clients.All.NewTest();
+            IHubConnectionContext<dynamic> clients = GetClients(hub);
 
-
-
-
+            clients.Client(connId).UpdateChart2(numbers);
         }
-
-
-
-
-
-
-        //public void BubleSort( List<int> number)
-        //{
-        //    var i = number.ToArray();
-
-        //    Clients.Caller.NewTest(i);
-
-
-        //}
-        public void BubleSort()
-        {
-
-            Clients.All.newTest();
-            
-        }
-
     }
 
 }
