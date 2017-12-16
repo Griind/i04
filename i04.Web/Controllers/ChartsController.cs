@@ -73,7 +73,7 @@ namespace i04.Web.Controllers
                         break;
                     case "Quick Sort":
                         {
-                            model = Sortingalgorithms.BubbleSort(model, _random);
+                            model = Sortingalgorithms.QuickSort(model, _random);
                         }
                         break;
                 }

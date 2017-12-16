@@ -1,5 +1,6 @@
 ﻿using i04.Web.Hubs;
 using i04.Web.Models.Home;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace i04.Web.Helpers
                         flag = true;
                      
                         AlgoHub.Send(numbers.ToArray(), null, Encode.Base64Decode(model.ConId));
-                        Thread.Sleep(100);
+                        Thread.Sleep(200);
                     }
                 }
             }
@@ -58,8 +59,62 @@ namespace i04.Web.Helpers
         }
         public static ChartsDataViewModel QuickSort(ChartsDataViewModel model , Random random)
         {
+
+            model.Numbers = new int[2][];
+            var size = model.Amount < 0 || model.Amount > 40 ? random.Next(2, 40) : model.Amount;
+            var numbers = new List<int>();
+            for (int i = 0; i < size; i++)
+            {
+                numbers.Add(random.Next(1, 380));
+            }
+            model.Numbers[0] = numbers.ToArray();
+
+            QuickSort(model,model.Numbers[0], 0, model.Numbers[0].Length - 1);
+           
+
             return model;
         }
+
+        public static ChartsDataViewModel QuickSort(ChartsDataViewModel model,int[] a, int start, int end)
+        {
+            if (start >= end)
+            {
+                return model;
+            }
+
+            int num = a[start];
+
+            int i = start, j = end;
+
+            while (i < j)
+            {
+                while (i < j && a[j] > num)
+                {
+                    j--;
+                }
+
+                a[i] = a[j];
+
+                while (i < j && a[i] < num)
+                {
+                    i++;
+                }
+
+                a[j] = a[i];
+                AlgoHub.Send(a, null, Encode.Base64Decode(model.ConId));
+                Thread.Sleep(200);
+            }
+
+            a[i] = num;
+            model.Numbers[1] = a;
+            
+            QuickSort(model,a, start, i - 1);
+            QuickSort(model,a, i + 1, end);
+            return model;
+        }
+
+
+
         public static ChartsDataViewModel InsertionSort(ChartsDataViewModel model, Random random)
         {
             return model;
