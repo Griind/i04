@@ -38,9 +38,9 @@ namespace i04.Web.Helpers
                         numbers[j] = temp;
 
                         flag = true;
-
+                     
                         AlgoHub.Send(numbers.ToArray(), null, Encode.Base64Decode(model.ConId));
-                        Thread.Sleep(50);
+                        Thread.Sleep(100);
                     }
                 }
             }
