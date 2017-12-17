@@ -15,6 +15,11 @@ namespace i04.Web.Controllers
     public class ChartsController : Controller
     {
         private readonly Random _random = new Random();
+
+        public ActionResult _partialSort( string sortMethod)
+        { 
+            return PartialView(sortMethod);
+        }
         public ActionResult Charts()
         {
 

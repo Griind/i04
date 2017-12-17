@@ -160,3 +160,77 @@
     </script>
     <br />
 </div>
+
+<div  id="element" style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
+
+
+
+<script type="text/javascript">
+
+
+                //Buble Sort Partial
+
+                $('#CheckBoxAlgoType_0__IsSelected').on('change', function () {
+                    if (this.checked) {
+                        $('#CheckBoxAlgoType_1__IsSelected').attr('disabled', true);
+                        $('#CheckBoxAlgoType_2__IsSelected').attr('disabled', true);
+                        $.ajax({
+                            url: '@Url.Action("_partialSort", "Charts", new { sortMethod = "_bubleSort" })',
+                type: "Get",
+                success: function (data) {
+                    $("#element").html(data);
+                }
+            });
+        }
+        else {
+            $('#CheckBoxAlgoType_2__IsSelected').attr('disabled', false);
+            $('#CheckBoxAlgoType_1__IsSelected').attr('disabled', false);
+            $("#element").html('');
+        }
+                })
+
+    //Merge Sort Partial
+
+    $('#CheckBoxAlgoType_1__IsSelected').on('change', function () {
+        if (this.checked) {
+            $('#CheckBoxAlgoType_0__IsSelected').attr('disabled', true);
+            $('#CheckBoxAlgoType_2__IsSelected').attr('disabled', true);
+            $.ajax({
+                url: '@Url.Action("_partialSort", "Charts", new { sortMethod = "_mergeSort" })',
+                type: "Get",
+                success: function (data) {
+                    $("#element").html(data);
+                }
+            });
+        }
+        else {
+            $('#CheckBoxAlgoType_0__IsSelected').attr('disabled', false);
+            $('#CheckBoxAlgoType_2__IsSelected').attr('disabled', false);
+            $("#element").html('');
+        }
+                })
+
+     //Quick Sort Partial
+
+    $('#CheckBoxAlgoType_2__IsSelected').on('change', function () {
+        if (this.checked) {
+            $('#CheckBoxAlgoType_0__IsSelected').attr('disabled', true);
+            $('#CheckBoxAlgoType_1__IsSelected').attr('disabled', true);
+            $.ajax({
+                url: '@Url.Action("_partialSort", "Charts", new { sortMethod = "_quickSort" })',
+                type: "Get",
+                success: function (data) {
+                    $("#element").html(data);
+                }
+            });
+        }
+        else {
+            $('#CheckBoxAlgoType_0__IsSelected').attr('disabled', false);
+            $('#CheckBoxAlgoType_1__IsSelected').attr('disabled', false);
+            $("#element").html('');
+        }
+                })
+
+
+
+</script>
