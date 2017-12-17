@@ -23,7 +23,7 @@ namespace i04.Web.Helpers
                 numbers.Add(random.Next(1, 380));
             }
             model.Numbers[0] = numbers.ToArray();
-
+            AlgoHub.SendUnsorted(numbers.ToArray(), null, Encode.Base64Decode(model.ConId));
             bool flag = true;
             int numLength = numbers.Count();
             var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -41,7 +41,7 @@ namespace i04.Web.Helpers
                         flag = true;
                      
                         AlgoHub.Send(numbers.ToArray(), null, Encode.Base64Decode(model.ConId));
-                        Thread.Sleep(200);
+                        Thread.Sleep(400);
                     }
                 }
             }
@@ -70,10 +70,10 @@ namespace i04.Web.Helpers
                 numbers.Add(random.Next(1, 380));
             }
             model.Numbers[0] = numbers.ToArray();
-           
+            AlgoHub.SendUnsorted(numbers.ToArray(), null, Encode.Base64Decode(model.ConId));
             _unsortedArray = numbers.ToArray();
             QuickSort(model, 0, model.Numbers[0].Length - 1);
-           
+            model.Numbers[0] = _unsortedArray;
 
             return model;
         }
@@ -107,12 +107,12 @@ namespace i04.Web.Helpers
 
                 a[j] = a[i];
                 AlgoHub.Send(a, null, Encode.Base64Decode(model.ConId));
-                Thread.Sleep(200);
+                Thread.Sleep(400);
             }
 
             a[i] = num;
             model.Numbers[1] = a;
-            model.Numbers[0] = _unsortedArray;
+            //model.Numbers[0] = _unsortedArray;
             QuickSort(model, start, i - 1);
             QuickSort(model, i + 1, end);
             return model;

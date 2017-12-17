@@ -21,7 +21,7 @@
                     labels: data,
                     datasets: [
                         {
-                            label: 'Sorting',
+                            label: 'After Sorting',
                             data: data,
                             backgroundColor: '#3fdbcb'
                         }
@@ -33,6 +33,31 @@
             });
     }
 </script>
+
+<script type="text/javascript">
+
+    function UpdateChart1(data) {
+        var ctx = document.getElementById("bar-chart1").getContext('2d');
+        var myChart = new Chart(ctx,
+            {
+                type: 'bar',
+                data: {
+                    labels: data,
+                    datasets: [
+                        {
+                            label: 'Before Sorting',
+                            data: data,
+                            backgroundColor: '#3fdbcb'
+                        }
+                    ]
+                },
+                options: {
+                    animation: false
+                }
+            });
+    }
+</script>
+
 @section scripts{
 
     <script src="@Url.Content("~/Scripts/jquery.signalR-2.2.2.min.js")"></script>
@@ -52,12 +77,17 @@
                 console.log("chart2");
                 UpdateChart2(data);
             }
+            algoHub.client.updateChart1 = function (data) {
+                console.log("chart1");
+                UpdateChart1(data);
+            }
+
         })()
     </script>
 }
 <div class="container col-lg-12 col-sm-12 col-md-12">
     <h2>
-        Sorting using "Bubble Sort"
+        Sorting algorithms
     </h2>
     <hr />
     <script src="~/Scripts/jquery-3.2.1.js"></script>
@@ -66,7 +96,7 @@
     <div>
         @using (Html.BeginForm("Charts", "Charts", FormMethod.Post))
         {  <p style="color:red">@ViewBag.CheckBoxError</p> 
-            @Html.LabelFor(m => Model.Amount, "Enter the ammount of random numbers (0-40) ");
+            @Html.LabelFor(m => Model.Amount, "Enter the ammount of random numbers (0-20) ");
             @Html.TextBoxFor(m => Model.Amount, new { @id = "amount", @class = "text-b" });
             @Html.HiddenFor(m => m.ConId, new { @id = "ConId" });
 

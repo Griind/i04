@@ -30,6 +30,13 @@ namespace i04.Web.Hubs
 
             clients.Client(connId).UpdateChart2(numbers);
         }
+
+        public static void SendUnsorted(int[] numbers, AlgoHub hub, string connId)
+        {
+            IHubConnectionContext<dynamic> clients = GetClients(hub);
+
+            clients.Client(connId).UpdateChart1(numbers);
+        }
     }
 
 }
