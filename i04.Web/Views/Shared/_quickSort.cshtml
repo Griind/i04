@@ -1,8 +1,27 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
+<h3>Quick sort</h3>
+<p>
+    Quicksort is a divide and conquer algorithm. Quicksort first divides a large array into two smaller sub-arrays: the low elements and the high elements. Quicksort can then recursively sort the sub-arrays.
+</p>
+   <p>The steps are:</p> 
+    <ul>
+        <li>Pick an element, called a <i>pivot</i>, from the array.</li>
+        <li><i>Partitioning</i>: reorder the array so that all elements with values less than the pivot come before the pivot, while all elements with values greater than the pivot come after it (equal values can go either way). After this partitioning, the pivot is in its final position. This is called the <i>partition</i> operation.</li>
+        <li>Recursively apply the above steps to the sub-array of elements with smaller values and separately to the sub-array of elements with greater values.</li>
+    </ul>
+    The base case of the recursion is arrays of size zero or one, which are in order by definition, so they never need to be sorted.
+    The pivot selection and partitioning steps can be done in several different ways; the choice of specific implementation schemes greatly affects the algorithm's performance.
 
 
-        <h3>Quick Sort</h3>
-  
+<hr>
+<p><b>Full example of quicksort on a random set of numbers. </b></p>
+
+<p>The shaded element is the pivot. 
+    It is always chosen as the last element of the partition. 
+    However, always choosing the last element in the partition as the pivot in this way results in poor performance (O(n²)) 
+    on already sorted arrays, or arrays of identical elements. Since sub-arrays of sorted / identical elements crop up a lot 
+    towards the end of a sorting procedure on a large set, versions of the quicksort algorithm that choose the pivot as the middle
+    element run much more quickly than the algorithm described in this diagram on large sets of numbers.</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Quicksort-diagram.svg/400px-Quicksort-diagram.svg.png" alt="Wikipedia source" style="width:400px;height:800px;float:left" />

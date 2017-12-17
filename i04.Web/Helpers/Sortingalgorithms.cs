@@ -11,7 +11,7 @@ namespace i04.Web.Helpers
 {
     public class Sortingalgorithms
     {
-        
+        static  int[] _unsortedArray;
         public static ChartsDataViewModel BubbleSort(ChartsDataViewModel model, Random random)
         {
 
@@ -59,7 +59,9 @@ namespace i04.Web.Helpers
         }
         public static ChartsDataViewModel QuickSort(ChartsDataViewModel model , Random random)
         {
-
+            
+            
+            
             model.Numbers = new int[2][];
             var size = model.Amount < 0 || model.Amount > 40 ? random.Next(2, 40) : model.Amount;
             var numbers = new List<int>();
@@ -68,15 +70,18 @@ namespace i04.Web.Helpers
                 numbers.Add(random.Next(1, 380));
             }
             model.Numbers[0] = numbers.ToArray();
-
-            QuickSort(model,model.Numbers[0], 0, model.Numbers[0].Length - 1);
+           
+            _unsortedArray = numbers.ToArray();
+            QuickSort(model, 0, model.Numbers[0].Length - 1);
            
 
             return model;
         }
 
-        public static ChartsDataViewModel QuickSort(ChartsDataViewModel model,int[] a, int start, int end)
+        public static ChartsDataViewModel QuickSort(ChartsDataViewModel model, int start, int end)
         {
+            
+            int[] a = model.Numbers[0];
             if (start >= end)
             {
                 return model;
@@ -107,9 +112,9 @@ namespace i04.Web.Helpers
 
             a[i] = num;
             model.Numbers[1] = a;
-            
-            QuickSort(model,a, start, i - 1);
-            QuickSort(model,a, i + 1, end);
+            model.Numbers[0] = _unsortedArray;
+            QuickSort(model, start, i - 1);
+            QuickSort(model, i + 1, end);
             return model;
         }
 
