@@ -80,31 +80,24 @@ namespace i04.Web.Helpers
 
         public static ChartsDataViewModel QuickSort(ChartsDataViewModel model, int start, int end)
         {
-            
             int[] a = model.Numbers[0];
             if (start >= end)
             {
                 return model;
             }
-
             int num = a[start];
-
             int i = start, j = end;
-
             while (i < j)
             {
                 while (i < j && a[j] > num)
                 {
                     j--;
                 }
-
                 a[i] = a[j];
-
                 while (i < j && a[i] < num)
                 {
                     i++;
                 }
-
                 a[j] = a[i];
                 AlgoHub.Send(a, null, Encode.Base64Decode(model.ConId));
                 Thread.Sleep(400);

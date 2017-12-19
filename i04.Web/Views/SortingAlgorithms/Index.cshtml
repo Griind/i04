@@ -94,7 +94,7 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 
     <div>
-        @using (Html.BeginForm("Charts", "Charts", FormMethod.Post))
+        @using (Html.BeginForm("Index", "SortingAlgorithms", FormMethod.Post))
         {  <p style="color:red">@ViewBag.CheckBoxError</p> 
             @Html.LabelFor(m => Model.Amount, "Enter the ammount of random numbers (0-20) ");
             @Html.TextBoxFor(m => Model.Amount, new { @id = "amount", @class = "text-b" });
@@ -205,7 +205,7 @@
                         $('#CheckBoxAlgoType_1__IsSelected').attr('disabled', true);
                         $('#CheckBoxAlgoType_2__IsSelected').attr('disabled', true);
                         $.ajax({
-                            url: '@Url.Action("_partialSort", "Charts", new { sortMethod = "_bubleSort" })',
+                            url: '@Url.Action("_partialSort", "SortingAlgorithms", new { sortMethod = "_bubleSort" })',
                 type: "Get",
                 success: function (data) {
                     $("#element").html(data);
@@ -226,7 +226,7 @@
             $('#CheckBoxAlgoType_0__IsSelected').attr('disabled', true);
             $('#CheckBoxAlgoType_2__IsSelected').attr('disabled', true);
             $.ajax({
-                url: '@Url.Action("_partialSort", "Charts", new { sortMethod = "_mergeSort" })',
+                url: '@Url.Action("_partialSort", "SortingAlgorithms", new { sortMethod = "_mergeSort" })',
                 type: "Get",
                 success: function (data) {
                     $("#element").html(data);
@@ -247,7 +247,7 @@
             $('#CheckBoxAlgoType_0__IsSelected').attr('disabled', true);
             $('#CheckBoxAlgoType_1__IsSelected').attr('disabled', true);
             $.ajax({
-                url: '@Url.Action("_partialSort", "Charts", new { sortMethod = "_quickSort" })',
+                url: '@Url.Action("_partialSort", "SortingAlgorithms", new { sortMethod = "_quickSort" })',
                 type: "Get",
                 success: function (data) {
                     $("#element").html(data);

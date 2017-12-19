@@ -12,7 +12,7 @@ using i04.Web.Helpers;
 
 namespace i04.Web.Controllers
 {
-    public class ChartsController : Controller
+    public class SortingAlgorithmsController : Controller
     {
         private readonly Random _random = new Random();
 
@@ -20,7 +20,7 @@ namespace i04.Web.Controllers
         { 
             return PartialView(sortMethod);
         }
-        public ActionResult Charts()
+        public ActionResult Index()
         {
 
 
@@ -39,7 +39,7 @@ namespace i04.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Charts(ChartsDataViewModel model)
+        public ActionResult Index(ChartsDataViewModel model)
         {
             if (model.CheckBoxAlgoType.Where(x => x.IsSelected).FirstOrDefault() == null || model.Amount == 0|| model.CheckBoxAlgoType.Where(x => x.IsSelected).Count()>1)
             {
