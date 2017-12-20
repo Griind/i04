@@ -31,6 +31,7 @@
                     animation: false
                 }
             });
+
     }
 </script>
 
@@ -47,6 +48,7 @@
                         {
                             label: 'Before Sorting',
                             data: data,
+
                             backgroundColor: '#3fdbcb'
                         }
                     ]
@@ -94,9 +96,19 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 
     <div>
-        @using (Html.BeginForm("Index", "SortingAlgorithms", FormMethod.Post))
-        {  <p style="color:red">@ViewBag.CheckBoxError</p> 
-            @Html.LabelFor(m => Model.Amount, "Enter the ammount of random numbers (0-20) ");
+        @using (Ajax.BeginForm(
+             "Index",
+            "SortingAlgorithms",
+             null,
+             new AjaxOptions
+             {
+                 UpdateTargetId = "bar-chart1",
+                 InsertionMode = InsertionMode.Replace,
+             },
+             new { id = "Algor" }))
+
+        {  <p style="color:red">@ViewBag.CheckBoxError</p>
+        @Html.LabelFor(m => Model.Amount, "Enter the ammount of random numbers (0-20) ");
             @Html.TextBoxFor(m => Model.Amount, new { @id = "amount", @class = "text-b" });
             @Html.HiddenFor(m => m.ConId, new { @id = "ConId" });
 
@@ -105,13 +117,14 @@
                 {
                     <tr>
                         <td>
-                         
+
                             @Html.HiddenFor(x => Model.CheckBoxAlgoType[idx].Id)
                             @Html.HiddenFor(x => Model.CheckBoxAlgoType[idx].Name)
                             @Html.CheckBoxFor(x => Model.CheckBoxAlgoType[idx].IsSelected)
-                           
+
+
                             @Html.DisplayFor(x => Model.CheckBoxAlgoType[idx].Name)
-                          
+
                         </td>
                     </tr>
                 }
@@ -147,7 +160,7 @@
                         ]
                     },
                     options: {
-                       
+
                         legend: { display: true },
                         title: {
                             display: true,
@@ -191,7 +204,7 @@
     <br />
 </div>
 
-<div  id="element" style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
+<div id="element" style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
 
 
 
