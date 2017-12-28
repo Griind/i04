@@ -115,24 +115,7 @@
         <input type="submit" name="Enter" />
     }
 
-    @*<div>
-        @using (Ajax.BeginForm(
-"Index",
-"SortingAlgorithms",
-null,
-new AjaxOptions
-{
-UpdateTargetId = "bar-chart1",
-InsertionMode = InsertionMode.Replace,
-},
-new { id = "Algor" }))
-
-        {
-
-
-        }
-
-    </div>*@
+  
     <script type="text/javascript">
         function getTextBoxContent() {
             return document.getElementById('ConId').value;
@@ -207,11 +190,27 @@ new { id = "Algor" }))
 
 
 <script type="text/javascript">
+                $(':checkbox').click(function (e) {
+                    if ($(this).is(':checked')) {
+                        $(':checked').prop('checked', false);
+                        $(this).prop('checked', true);
+                        var str = "_bubleSort";
+                        $.ajax({
+                            url: '@Url.Action("_partialSort", "SortingAlgorithms")?sortMethod='+str,
+                type: "Get",
+                success: function (data) {
+                    $("#element").html(data);
+                }
+            });
 
-
+                    }
+                    else {
+                        e.preventDefault();
+                    }
+                });
                 //Buble Sort Partial
 
-                $('#CheckBoxAlgoType_0__IsSelected').on('change', function () {
+                @*$('#CheckBoxAlgoType_0__IsSelected').on('change', function () {
                     if (this.checked) {
                         $('#CheckBoxAlgoType_1__IsSelected').attr('disabled', true);
                         $('#CheckBoxAlgoType_1__IsSelected').attr('checked', false);
@@ -276,7 +275,7 @@ new { id = "Algor" }))
             $('#CheckBoxAlgoType_1__IsSelected').attr('disabled', false);
             $("#element").html('');
         }
-                })
+                })*@
 
 
 
