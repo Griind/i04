@@ -22,20 +22,7 @@ namespace i04.Web.Controllers
         }
         public ActionResult Index()
         {
-
-
-            return View(
-                new ChartsDataViewModel()
-                {
-                    Numbers = new int[][] { new int[] { 0 }, new[] { 0 } },
-                    CheckBoxAlgoType = new List<CheckBoxAlgorithms>
-                {
-                     new CheckBoxAlgorithms {Id=0,Name="Bubble Sort",IsSelected=false},
-                     new CheckBoxAlgorithms {Id=1,Name="Merge Sort",IsSelected=false},
-                     new CheckBoxAlgorithms {Id=2,Name="Quick Sort",IsSelected=false}
-                }
-                }
-                );
+            return View(new ChartsDataViewModel());
         }
 
         [HttpPost]
@@ -44,17 +31,7 @@ namespace i04.Web.Controllers
             if (model.CheckBoxAlgoType.Where(x => x.IsSelected).FirstOrDefault() == null || model.Amount == 0|| model.CheckBoxAlgoType.Where(x => x.IsSelected).Count()>1)
             {
                 ViewBag.CheckBoxError = "Please enter amount of random numbers and select just one sorting method";
-                return View(new ChartsDataViewModel()
-                {
-                    Numbers = new int[][] { new int[] { 0 }, new[] { 0 } },
-                    CheckBoxAlgoType = new List<CheckBoxAlgorithms>
-                {
-                     new CheckBoxAlgorithms {Id=0,Name="Bubble Sort",IsSelected=false},
-                     new CheckBoxAlgorithms {Id=1,Name="Merge Sort",IsSelected=false},
-                     new CheckBoxAlgorithms {Id=2,Name="Quick Sort",IsSelected=false}
-                }
-                }
-                );
+                return View(new ChartsDataViewModel());
             }
             else
             {
