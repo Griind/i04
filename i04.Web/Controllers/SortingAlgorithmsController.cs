@@ -30,15 +30,16 @@ namespace i04.Web.Controllers
         {
             if (model.CheckBoxAlgoType.Where(x => x.IsSelected).FirstOrDefault() == null || model.Amount == 0|| model.CheckBoxAlgoType.Where(x => x.IsSelected).Count()>1)
             {
-                ViewBag.CheckBoxError = "Please enter amount of random numbers and select just one sorting method";
-                return View(new ChartsDataViewModel());
+                ModelState.AddModelError("Amount","Please enter amount of random numbers and select just one sorting method");
+               
+                return View(model);
             }
             else
             {
-                List<CheckBoxAlgorithms> lHob = new List<CheckBoxAlgorithms>();
-                lHob = model.CheckBoxAlgoType;
+                List<CheckBoxAlgorithms> chkBskList = new List<CheckBoxAlgorithms>();
+                chkBskList = model.CheckBoxAlgoType;
 
-                var str = lHob.Where(x => x.IsSelected).Select(x => x.Name).FirstOrDefault().ToString();
+                var str = chkBskList.Where(x => x.IsSelected).Select(x => x.Name).FirstOrDefault().ToString();
 
 
                 switch (str)//Todo: request from the view;

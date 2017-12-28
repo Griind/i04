@@ -87,65 +87,77 @@
         })()
     </script>
 }
-<div class="container col-lg-12 col-sm-12 col-md-12">
-    <h2>
-        Sorting algorithms
-    </h2>
-    <hr />
-    <script src="~/Scripts/jquery-3.2.1.js"></script>
-    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <div class="container col-lg-12 col-sm-12 col-md-12">
+        <h2>
+            Sorting algorithms
+        </h2>
+        <hr />
+        <script src="~/Scripts/jquery-3.2.1.js"></script>
+        <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 
-    <div>
-        @using (Ajax.BeginForm(
-             "Index",
-            "SortingAlgorithms",
-             null,
-             new AjaxOptions
-             {
-                 UpdateTargetId = "bar-chart1",
-                 InsertionMode = InsertionMode.Replace,
-             },
-             new { id = "Algor" }))
+        @using (Html.BeginForm("Index", "SortingAlgorithms", FormMethod.Post))
+    {
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
-        {  <p style="color:red">@ViewBag.CheckBoxError</p>
-        @Html.LabelFor(m => Model.Amount, "Enter the ammount of random numbers (0-20) ");
-            @Html.TextBoxFor(m => Model.Amount, new { @id = "amount", @class = "text-b" });
-            @Html.HiddenFor(m => m.ConId, new { @id = "ConId" });
+
+        @Html.LabelFor(m => Model.Amount, "Enter the ammount of random numbers (0-20) ")
+        @Html.TextBoxFor(m => Model.Amount, new { @id = "amount", @class = "text-b" })
+        @Html.HiddenFor(m => m.ConId, new { @id = "ConId" })
+        @Html.HiddenFor(m => m.CheckBoxAlgoType)
+        <input id="IsSelected" type="checkbox" value="true" name="Remember" />
+        <input type="submit" name="Enter" />
+}
+
+        <div>
+            @using (Ajax.BeginForm(
+     "Index",
+    "SortingAlgorithms",
+     null,
+     new AjaxOptions
+     {
+         UpdateTargetId = "bar-chart1",
+         InsertionMode = InsertionMode.Replace,
+     },
+     new { id = "Algor" }))
+
+        {
+
+
 
             <table>
                 @for (int idx = 0; idx < Model.CheckBoxAlgoType.Count; idx++)
-                {
-                    <tr>
-                        <td>
+            {
+                <tr>
+                    <td>
 
-                            @Html.HiddenFor(x => Model.CheckBoxAlgoType[idx].Id)
-                            @Html.HiddenFor(x => Model.CheckBoxAlgoType[idx].Name)
-                            @Html.CheckBoxFor(x => Model.CheckBoxAlgoType[idx].IsSelected)
+                        @Html.HiddenFor(x => Model.CheckBoxAlgoType[idx].Id)
+                        @Html.HiddenFor(x => Model.CheckBoxAlgoType[idx].Name)
+                        @Html.CheckBoxFor(x => Model.CheckBoxAlgoType[idx].IsSelected)
 
 
-                            @Html.DisplayFor(x => Model.CheckBoxAlgoType[idx].Name)
+                        @Html.DisplayFor(x => Model.CheckBoxAlgoType[idx].Name)
 
-                        </td>
-                    </tr>
-                }
+                    </td>
+                </tr>
+        }
             </table>
 
 
-            <input type="submit" value="Enter" />
-        }
 
-    </div>
-    <script type="text/javascript">
-        function getTextBoxContent() {
-            return document.getElementById('ConId').value;
-        }
-    </script>
-    <hr />
+    }
 
-    <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <canvas id="bar-chart1"></canvas>
-    </div>
-    <script>
+        </div>
+        <script type="text/javascript">
+            function getTextBoxContent() {
+                return document.getElementById('ConId').value;
+            }
+        </script>
+        <hr />
+
+        <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <canvas id="bar-chart1"></canvas>
+        </div>
+        <script>
             new Chart(document.getElementById("bar-chart1"),
                 {
                     type: 'bar',
@@ -169,12 +181,12 @@
                         }
                     }
                 });
-    </script>
+        </script>
 
-    <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <canvas id="bar-chart2"></canvas>
-    </div>
-    <script>
+        <div style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <canvas id="bar-chart2"></canvas>
+        </div>
+        <script>
                 new Chart(document.getElementById("bar-chart2"),
                     {
                         type: 'bar',
@@ -200,9 +212,9 @@
                             }
                         }
                     });
-    </script>
-    <br />
-</div>
+        </script>
+        <br />
+    </div>
 
 <div id="element" style="float: left" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
 
