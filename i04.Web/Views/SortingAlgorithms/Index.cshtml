@@ -107,7 +107,7 @@
         {
             <br />
             @Html.HiddenFor(m => m.CheckBoxAlgoType[i].Id)
-            @Html.CheckBoxFor(m => m.CheckBoxAlgoType[i].IsSelected)
+            @Html.CheckBoxFor(m => m.CheckBoxAlgoType[i].IsSelected, new { @id = "check" + i })
             @Html.HiddenFor(m => m.CheckBoxAlgoType[i].Name)
             @Html.DisplayFor(x => Model.CheckBoxAlgoType[i].Name)
         }
@@ -115,7 +115,7 @@
         <input type="submit" name="Enter" />
     }
 
-  
+
     <script type="text/javascript">
         function getTextBoxContent() {
             return document.getElementById('ConId').value;
@@ -194,7 +194,18 @@
                     if ($(this).is(':checked')) {
                         $(':checked').prop('checked', false);
                         $(this).prop('checked', true);
-                        var str = "_bubleSort";
+                        var str = $(this).attr('id');
+                        switch (str) {
+                            case "check0":
+                                str="_bubbleSort"
+                                break;
+                            case "check1":
+                                str="_mergeSort"
+                                break;
+                            case "check2":
+                                str="_quickSort"
+                                break;
+                        }
                         $.ajax({
                             url: '@Url.Action("_partialSort", "SortingAlgorithms")?sortMethod='+str,
                 type: "Get",
@@ -202,81 +213,9 @@
                     $("#element").html(data);
                 }
             });
-
                     }
                     else {
                         e.preventDefault();
                     }
                 });
-                //Buble Sort Partial
-
-                @*$('#CheckBoxAlgoType_0__IsSelected').on('change', function () {
-                    if (this.checked) {
-                        $('#CheckBoxAlgoType_1__IsSelected').attr('disabled', true);
-                        $('#CheckBoxAlgoType_1__IsSelected').attr('checked', false);
-                        $('#CheckBoxAlgoType_2__IsSelected').attr('disabled', true);
-                        $('#CheckBoxAlgoType_2__IsSelected').attr('checked', false);
-                        $.ajax({
-                            url: '@Url.Action("_partialSort", "SortingAlgorithms", new { sortMethod = "_bubleSort" })',
-                type: "Get",
-                success: function (data) {
-                    $("#element").html(data);
-                }
-            });
-        }
-        else {
-            $('#CheckBoxAlgoType_2__IsSelected').attr('disabled', false);
-            $('#CheckBoxAlgoType_1__IsSelected').attr('disabled', false);
-            $("#element").html('');
-        }
-                })
-
-    //Merge Sort Partial
-
-    $('#CheckBoxAlgoType_1__IsSelected').on('change', function () {
-        if (this.checked) {
-            $('#CheckBoxAlgoType_0__IsSelected').attr('disabled', true);
-            $('#CheckBoxAlgoType_2__IsSelected').attr('disabled', true);
-            $('#CheckBoxAlgoType_0__IsSelected').attr('checked', false);
-            $('#CheckBoxAlgoType_2__IsSelected').attr('checked', false);
-            $.ajax({
-                url: '@Url.Action("_partialSort", "SortingAlgorithms", new { sortMethod = "_mergeSort" })',
-                type: "Get",
-                success: function (data) {
-                    $("#element").html(data);
-                }
-            });
-        }
-        else {
-            $('#CheckBoxAlgoType_0__IsSelected').attr('disabled', false);
-            $('#CheckBoxAlgoType_2__IsSelected').attr('disabled', false);
-            $("#element").html('');
-        }
-                })
-
-     //Quick Sort Partial
-
-    $('#CheckBoxAlgoType_2__IsSelected').on('change', function () {
-        if (this.checked) {
-            $('#CheckBoxAlgoType_0__IsSelected').attr('disabled', true);
-            $('#CheckBoxAlgoType_1__IsSelected').attr('disabled', true);
-            $('#CheckBoxAlgoType_0__IsSelected').attr('checked', false);
-            $('#CheckBoxAlgoType_1__IsSelected').attr('checked', false);
-            $.ajax({
-                url: '@Url.Action("_partialSort", "SortingAlgorithms", new { sortMethod = "_quickSort" })',
-                type: "Get",
-                success: function (data) {
-                    $("#element").html(data);
-                }
-            });
-        }
-        else {
-            $('#CheckBoxAlgoType_0__IsSelected').attr('disabled', false);
-            $('#CheckBoxAlgoType_1__IsSelected').attr('disabled', false);
-            $("#element").html('');
-        }
-                })*@
-
-
-
 </script>

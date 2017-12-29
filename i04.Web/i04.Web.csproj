@@ -250,7 +250,7 @@
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\Home\SandBox.cshtml" />
-    <Content Include="Views\Shared\_bubleSort.cshtml" />
+    <Content Include="Views\Shared\_bubbleSort.cshtml" />
     <Content Include="Views\Shared\_mergeSort.cshtml" />
     <Content Include="Views\Shared\_quickSort.cshtml" />
   </ItemGroup>

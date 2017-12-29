@@ -51,7 +51,7 @@ namespace i04.Web.Controllers
                         break;
                     case "Merge Sort":
                         {
-                            model = Sortingalgorithms.BubbleSort(model, _random);
+                            model = Sortingalgorithms.MergeSort(model, _random);
                         }
                         break;
                     case "Quick Sort":
