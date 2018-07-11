@@ -1,0 +1,26 @@
+﻿@model i04.Web.Models.EncodeData
+
+@{
+    ViewBag.Title = "EncDec";
+}
+
+<h2> To Base64</h2>
+@using (Html.BeginForm("Encode", "EncDec", FormMethod.Post))
+{
+
+    <div class="row ">
+        <div class="col-sm-6">
+            <h2></h2>
+            @Html.TextAreaFor(m => m.DataLeft, new { placeholder = "Type (or paste) here...", @class = "enc-cont", @rows = 15 })
+
+        </div>
+        <div class=" col-sm-6">
+            <h2></h2>
+            @Html.TextAreaFor(m => m.DataRight, new { placeholder = "Result goes here...", @class = "enc-cont", @rows = 15})
+          
+
+        </div>
+    </div>
+
+    <input type="submit" name="Enter" />
+}

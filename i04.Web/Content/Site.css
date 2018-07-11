@@ -22,13 +22,25 @@ select,
 textarea {
     max-width: 280px;
 }
-.img-container img{
-    max-height:150px;
+
+.img-container img {
+    max-height: 150px;
 }
-.img-container{
-    text-align:center;
+
+.img-container {
+    text-align: center;
 }
 
 .text-b {
     margin-left: 1rem;
 }
+
+.enc-cont {
+    resize:unset;
+    background-color: rgba(238,238,238,1);
+    max-width: 100%;
+    width: 100%;
+   
+}
+
+
